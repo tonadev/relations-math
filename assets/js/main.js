@@ -325,15 +325,18 @@ function verifyIfPartialOrder(isReflexive, isAntisymmetric, isTransitive) {
     for (var i = 0; i < adjacencyMatrix.length; i++) {
         for (var j = 0; j < adjacencyMatrix.length; j++) {
             if (adjacencyMatrix[i][j] == 1) {
-                addEdge = true;
+                var addEdge = true;
+
                 for (var k = 0; k < adjacencyMatrix.length; k++) {
-                    if (adjacencyMatrix[i][k] == 1 && adjacencyMatrix[j][k] == 1) {
+                    if (i == k || j == k) { continue; }
+
+                    if (adjacencyMatrix[i][k] == 1 && adjacencyMatrix[k][j] == 1) {
                         addEdge = false;
                     }
                 }
 
                 if (addEdge && i != j) {
-                    rawHasseDiagramEdges.push({from: i, to: j});
+                    rawHasseDiagramEdges.push({from: i + 1, to: j + 1});
                 }
             }
         }
@@ -361,13 +364,13 @@ function verifyIfPartialOrder(isReflexive, isAntisymmetric, isTransitive) {
 
     var isLatticeParagraph = document.createElement("p");
     if (!isAdjMatrixALattice) {
-        isLatticeParagraph.innerText = "No es un retículo.";
+        isLatticeParagraph.innerText = "No es una retícula.";
         partialOrderParagraphElement.parentElement.appendChild(isLatticeParagraph);
         
         return;
     }
     
-    isLatticeParagraph.innerText = "Sí es un retículo.";
+    isLatticeParagraph.innerText = "Sí es una retícula.";
     partialOrderParagraphElement.parentElement.appendChild(isLatticeParagraph);
 }
 
@@ -387,23 +390,50 @@ function isLattice() {
                     }
                 }
 
+
+                var infimum_idx = -1;
+
                 if (lower_bounds.length == 0) { return false; }
                 for (var l = 0; l < lower_bounds.length; l++) {
+                    var infimum_candidate_idx = lower_bounds[l];
+                    var isInfimum = true;
+
                     for (var m = 0; m < lower_bounds.length; m++) {
-                        if (adjacencyMatrix[m][l] != 1 || adjacencyMatrix[l][m] != 1) {
-                            return false;
+                        var lower_bound_idx = lower_bounds[m];
+                        
+                        if (adjacencyMatrix[lower_bound_idx][infimum_candidate_idx] != 1) {
+                            isInfimum = false;
+                            break;
                         }
                     }
+
+                    if (isInfimum) {
+                        infimum_idx = infimum_candidate_idx;
+                    }
                 }
+                if (infimum_idx == -1) { return false; }
+
+                var supremum_idx = -1;
 
                 if (upper_bounds.length == 0) { return false; }
                 for (var l = 0; l < upper_bounds.length; l++) {
+                    var supremum_candidate_idx = upper_bounds[l];
+                    var isSupremum = true;
+
                     for (var m = 0; m < upper_bounds.length; m++) {
-                        if (adjacencyMatrix[m][l] != 1 || adjacencyMatrix[l][m] != 1) {
-                            return false;
+                        var upper_bound_idx = upper_bounds[m]
+
+                        if (adjacencyMatrix[supremum_candidate_idx][upper_bound_idx] != 1) {
+                            isSupremum = false;
+                            break;
                         }
                     }
+
+                    if (isSupremum) {
+                        supremum_idx = supremum_candidate_idx;
+                    }
                 }
+                if (supremum_idx == -1) { return false; }
 
             }
         }
