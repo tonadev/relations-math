@@ -269,21 +269,40 @@ function drawGraphAndMatrix() {
     var network = new vis.Network(container, data, options);
 }
 
+function multiDimensionalUnique(arr) {
+    var uniques = [];
+    var itemsFound = {};
+    for(var i = 0, l = arr.length; i < l; i++) {
+        var stringified = JSON.stringify(arr[i]);
+        if(itemsFound[stringified]) { continue; }
+        uniques.push(arr[i]);
+        itemsFound[stringified] = true;
+    }
+    return uniques;
+}
+
 function verifyIfEquivalence(isReflexive, isSymmetric, isTransitive) {
     var equivalenceParagraphElement = document.getElementById("equivalence-paragraph");
-
+    
     var isAnEquivalenceRelation = isEquivalence(isReflexive, isSymmetric, isTransitive);
-
+    
     if (!isAnEquivalenceRelation) {
         equivalenceParagraphElement.innerText = "No es una relación de equivalencia.";
-
+        
         return;
     }
-
+    
     equivalenceParagraphElement.innerText = "Sí es una relación de equivalencia.";
-
+    
     var equivalenceClassListElement = document.getElementById("equivalence-class-list");
+    var equivalenceClassContainer = document.getElementById("equivalence-class-container");
+    var equivalencePartitionsContainer = document.getElementById("equivalence-partitions-container");
+    var equivalencePartitionsParagraphElement = document.getElementById("equivalence-partitions-paragraph");
 
+    equivalenceClassContainer.style.display = 'block';
+    equivalencePartitionsContainer.style.display = 'block';
+
+    var partitions = []
     for (var i = 0; i < adjacencyMatrix.length; i++) {
         var equivalents = []
         for (var j = 0; j < adjacencyMatrix.length; j++) {
@@ -292,11 +311,23 @@ function verifyIfEquivalence(isReflexive, isSymmetric, isTransitive) {
             }
         }
 
+        partitions.push(equivalents);
+
         var li = document.createElement("li");
         li.innerText = `[${nodes[i]}] = {${equivalents.toString()}}`;
 
         equivalenceClassListElement.appendChild(li);
     }
+    
+    partitions = multiDimensionalUnique(partitions);
+
+    var partitionsStr = '';
+    for (var i = 0; i < partitions.length; i++) {
+        partitionsStr += `{${partitions[i].toString()}}, `;
+    }
+    partitionsStr = '{' + partitionsStr.substring(0, partitionsStr.length - 2) + '}';
+
+    equivalencePartitionsParagraphElement.innerText = partitionsStr;
 }
 
 function verifyIfPartialOrder(isReflexive, isAntisymmetric, isTransitive) {
