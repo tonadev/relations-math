@@ -14,6 +14,12 @@
     font-style: italic;
 }
 
+body{
+    background-image:url('../img/background.png');
+    background-repeat: repeat;
+    /*background-size: cover;*/
+}
+
 main {
     width: 80%;
     margin: auto;
