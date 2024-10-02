@@ -8,11 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 
-    <title>Document</title>
+    <title>Relaciones</title>
 </head>
 <body>
+    <img src="./assets/img/background.png" alt="background" class="background">
     <!-- ALERT -->
     <div class="alert">
         <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -21,10 +22,10 @@
     <!-- END ALERT -->
 
     <!-- MODAL -->
-     <div id="input-modal" class="modal">
+    <div id="input-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Relación R en A</h2>
+                <h3>Relación R en A</h3>
             </div>
             <div class="modal-body">
                 <div>
@@ -46,17 +47,25 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="check()">Procesar</button>
+                <button onclick="check()" id="submit-btn">Procesar</button>
             </div>
         </div>
-     </div>
+    </div>
     <!-- END MODAL -->
 
     <!-- MAIN -->
     <main>
-        <h2 style="margin-bottom: 2rem;">Análisis</h2>
-        <button class="accordion">Propiedades</button>
-        <div class="panel">
+        <div class="container">
+            <h1>RELACIONES Y SUS PROPIEDADES</h1>
+            <h2>Análisis</h2>
+            <div id="result">
+                <h3 id="nodes-result"></h3><br>
+                <h3 id="edges-result"></h3>
+            </div>
+        </div>
+        
+        <div class="principal container">
+            <h2>Propiedades</h2>
             <ul id="properties">
                 <li id="isReflexive">Reflexiva</li>
                 <li id="isIrreflexive">Irreflexiva</li>
@@ -66,9 +75,9 @@
                 <li id="isTransitive">Transitiva</li>
             </ul>
         </div>
-        <button class="accordion">Grafo y matriz de adyacencia</button>
-        <div class="panel">
-            <h2 style="margin: 1rem 0;">Matriz de adyacencia</h2>
+        
+        <div class="panel-adjacencyMatrix container">
+            <h2>Matriz de adyacencia</h2>
             <div style="overflow-x: auto;">
                 <table id="adjacencyMatrixTable">
                     <thead>
@@ -77,31 +86,36 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <h2 style="margin: 1rem 0;">Grafo</h2>
+            <h2>Grafo</h2>
             <div id="graph-canvas" style="width: 100%; height: 500px;"></div>
         </div>
-        <button class="accordion">¿Es relación de equivalencia?</button>
-        <div class="panel">
-            <p id="equivalence-paragraph">Lorem Ipsum...</p>
-            <div id="equivalence-class-container" style="display: hidden;">
+        
+        <div class="panel-equivalence container">
+            <h2>Relación de equivalencia</h2>
+            <p id="equivalence-paragraph"></p>
+            <div id="equivalence-class-container" >
                 <h3 style="margin: 1rem 0.5rem 0 0;">Clases de equivalencia</h3>
                 <ul id="equivalence-class-list"></ul>
             </div>
-            <div id="equivalence-partitions-container" style="display: hidden;">
+            <div id="equivalence-partitions-container">
                 <h3 style="margin: 1rem 0;">Particiones</h3>
                 <p id="equivalence-partitions-paragraph"></p>
             </div>
         </div>
-        <button class="accordion">¿Es orden parcial?</button>
-        <div class="panel">
-            <p id="partial-order-paragraph">Lorem Ipsum...</p>
+        
+        <div class="panel-partial-order container">
+            <h2>Orden parcial</h2>
+            <p id="partial-order-paragraph"></p>
             <div id="hasseDiagramCanvas" style="width: 100%; height: 500px; display: none;"></div>
+        </div>
+
+        <div class="panel-none container">
+            <h2>No es una Relación de equivalencia ni una Relación de orden parcial</h2>
         </div>
     </main>
     <!-- END MAIN -->
 
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/accordion.js"></script>
 </body>
 </html>

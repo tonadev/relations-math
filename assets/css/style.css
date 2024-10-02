@@ -1,3 +1,9 @@
+:root {
+    --modal: #494741;
+    --primaryColor: #FFFCFF;
+    --secondaryColor: #CCC;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,13 +11,17 @@
 
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    font-style: normal;
+    font-style: italic;
 }
 
 main {
     width: 80%;
     margin: auto;
     padding: 2rem;
+}
+
+h2{
+    margin: 30px;
 }
 
 label {
@@ -24,8 +34,9 @@ input, textarea {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--secondaryColor);
     border-radius: 4px;
+    font-size: 15px;
 }
 
 ul {
@@ -39,22 +50,17 @@ ul li {
 
 table {
     border-collapse: collapse;
-    border-spacing: 0;
     width: 100%;
-    border: 1px solid #ddd;
 }
 
 th, td {
-    text-align: center;
     padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #194284;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2
-}
-
-th, tr > td:first-child {
-    font-weight: bold;
+tr:hover {
+    background-color: var(--primaryColor);
 }
 
 #properties li {
@@ -66,7 +72,7 @@ th, tr > td:first-child {
     content: '\00d7';
     position: absolute;
     top: 10px;
-    left: 16px;
+    left: 42%;
 }
 
 #properties li.checked::before {
@@ -79,7 +85,7 @@ th, tr > td:first-child {
 }
 
 .accordion {
-    background-color: #eee;
+    background-color: var(--primaryColor);
     color: #444;
     cursor: pointer;
     padding: 1rem;
@@ -97,32 +103,25 @@ th, tr > td:first-child {
     float: right;
     margin-left: 5px;
 }
-  
+
 .active:after {
     content: "\2796";
 }
 
 .active, .accordion:hover {
-    background-color: #ccc;
-}
-
-.panel {
-    padding: 1rem;
-    background-color: white;
-    display: none;
-    overflow: hidden;
+    background-color: var(--secondaryColor);
 }
 
 .alert {
     display: none;
     padding: 2rem;
     background-color: #f44336;
-    color: white;
+    color: var(--primaryColor);
 }
 
 .alert-close {
     margin-left: 15px;
-    color: white;
+    color: var(--primaryColor);
     font-weight: bold;
     float: right;
     font-size: 22px;
@@ -142,12 +141,11 @@ th, tr > td:first-child {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--primaryColor);
     margin: 25vh auto;
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
@@ -172,26 +170,55 @@ th, tr > td:first-child {
 
 .modal-header {
     padding: 1rem 2rem;
-    background-color: #5cb85c;
-    color: white;
+    background-color: var(--modal);
+    color: var(--primaryColor);
+    text-align: center;
 }
 
 .modal-footer {
     padding: 1rem 2rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--secondaryColor);
 }
 
 .modal-footer button {
     width: 100%;
-    background-color: #5cb85c;
-    color: white;
+    background-color: transparent;
+    color: var(--modal);
     padding: 14px 20px;
     margin: 8px 0;
-    border: none;
-    border-radius: 4px;
+    border: 1px solid;
+    border-radius: 10px;
     cursor: pointer;
+    font-size: 1rem;
 }
 
 .modal-footer button:hover {
-    background-color: #45a049;
+    background-color: var(--modal);
+    color: var(--primaryColor);
+}
+
+.panel-equivalence, 
+.panel-partial-order,
+.panel-none {
+    display: hidden;
+}
+
+.container{
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+/*#result, #properties{
+    text-align: left;
+    border: 2px solid;
+    width: 80%;
+}*/
+
+.background {
+    z-index: -999;
+    width: 100%;
+    height: 100%;
+    position:fixed;
+    top:0;
+    left: 0;
 }

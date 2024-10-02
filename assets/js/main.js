@@ -151,49 +151,72 @@ function check() {
     modal.style.display = "none";
 
     verifyProperties();
+
+    var panelNone = document.querySelector(".panel-none");
+    var panelPartialOrder = document.querySelector(".panel-partial-order");
+    var panelEquivalence = document.querySelector(".panel-equivalence");
+
+    if (panelPartialOrder.style.display === "none" && panelEquivalence.style.display === "none") {
+        // Si ninguna relación es válida, mostrar el panel de "ninguna relación"
+        panelNone.style.display = "block";
+    } else {
+        panelNone.style.display = "none";
+    }
 }
 
 function verifyProperties() {
     var isAdjMatrixReflexive = isReflexive(adjacencyMatrix);
     if (isAdjMatrixReflexive) {
         var isReflexiveListItem = document.getElementById("isReflexive");
-
+        document.getElementById("isReflexive").style.color = "green";
         isReflexiveListItem.classList.add("checked");
+    } else {
+        document.getElementById("isReflexive").style.color = "red";
     }
 
     var isAdjMatrixIrreflexive = isIrreflexive(adjacencyMatrix);
     if (isAdjMatrixIrreflexive) {
         var isIrreflexiveListItem = document.getElementById("isIrreflexive");
-
+        document.getElementById("isIrreflexive").style.color = "green";
         isIrreflexiveListItem.classList.add("checked");
+    } else {
+        document.getElementById("isIrreflexive").style.color = "red";
     }
 
     var isAdjMatrixSymmetric = isSymmetric(adjacencyMatrix);
     if (isAdjMatrixSymmetric) {
         var isSymmetricListItem = document.getElementById("isSymmetric");
-
+        document.getElementById("isSymmetric").style.color = "green";
         isSymmetricListItem.classList.add("checked");
+    } else {
+        document.getElementById("isSymmetric").style.color = "red";
     }
 
     var isAdjMatrixAsymmetric = isAsymmetric(adjacencyMatrix)
     if (isAdjMatrixAsymmetric) {
         var isAsymmetricListItem = document.getElementById("isAsymmetric");
-
+        document.getElementById("isAsymmetric").style.color = "green";
         isAsymmetricListItem.classList.add("checked");
+    } else {
+        document.getElementById("isAsymmetric").style.color = "red";
     }
 
     var isAdjMatrixAntisymmetric = isAntisymmetric(adjacencyMatrix)
     if (isAdjMatrixAntisymmetric) {
         var isAntisymmetricListItem = document.getElementById("isAntisymmetric");
-
+        document.getElementById("isAntisymmetric").style.color = "green";
         isAntisymmetricListItem.classList.add("checked");
+    } else {
+        document.getElementById("isAntisymmetric").style.color = "red";
     }
 
     var isAdjMatrixTransitive = isTransitive(adjacencyMatrix);
     if (isAdjMatrixTransitive) {
         var isTransitiveListItem = document.getElementById("isTransitive");
-
+        document.getElementById("isTransitive").style.color = "green"
         isTransitiveListItem.classList.add("checked");
+    } else {
+        document.getElementById("isTransitive").style.color = "red";
     }
 
     
@@ -284,12 +307,17 @@ function multiDimensionalUnique(arr) {
 function verifyIfEquivalence(isReflexive, isSymmetric, isTransitive) {
     var equivalenceParagraphElement = document.getElementById("equivalence-paragraph");
     
+    var panelEquivalence = document.querySelector(".panel-equivalence");
+
     var isAnEquivalenceRelation = isEquivalence(isReflexive, isSymmetric, isTransitive);
     
     if (!isAnEquivalenceRelation) {
         equivalenceParagraphElement.innerText = "No es una relación de equivalencia.";
+        panelEquivalence.style.display = "none";
         
         return;
+    }  else {
+        panelEquivalence.style.display = "block";
     }
     
     equivalenceParagraphElement.innerText = "Sí es una relación de equivalencia.";
@@ -333,12 +361,17 @@ function verifyIfEquivalence(isReflexive, isSymmetric, isTransitive) {
 function verifyIfPartialOrder(isReflexive, isAntisymmetric, isTransitive) {
     var partialOrderParagraphElement = document.getElementById("partial-order-paragraph");
 
+    var panelPartialOrder = document.querySelector(".panel-partial-order");
+
     var isAPartialOrderRelation = isPartialOrder(isReflexive, isAntisymmetric, isTransitive);
 
     if (!isAPartialOrderRelation) {
         partialOrderParagraphElement.innerText = "No es un orden parcial.";
+        panelPartialOrder.style.display = "none";
 
         return;
+    } else {
+        panelPartialOrder.style.display = "block";
     }
 
     partialOrderParagraphElement.innerText = "Sí es un orden parcial.";
@@ -471,3 +504,13 @@ function isLattice() {
     }
     return true;
 }
+
+document.getElementById('submit-btn').addEventListener('click', function() {
+    // Obtener los valores del input y textarea
+    let nodes = document.getElementById('nodes-input').value;
+    let edges = document.getElementById('edges-textarea').value;
+
+    // Pasar los valores a los elementos <p>
+    document.getElementById('nodes-result').textContent = `Nodos: ${nodes}`;
+    document.getElementById('edges-result').textContent = `Pares ordenados: ${edges}`;
+});
